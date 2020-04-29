@@ -1,0 +1,17 @@
+{
+  "name": "tickr",
+  "displayName": "tickr",
+  "expo": {
+    "name": "tickr",
+    "slug": "tickr",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
