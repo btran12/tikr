@@ -6,7 +6,7 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 export default function App() {
   const normalCount = 15;
   const breakCount = 10;
-  const defaultIterations = 2;
+  const defaultIterations = 3;
 
   const [counter, setCounter] = useState(0);
   const [iteration, setIteration] = useState(defaultIterations); // Keep track of the number of reps
@@ -14,15 +14,14 @@ export default function App() {
 
   // Run when iteration is updated
   useEffect(() => {
-    // const tinyPause = setInterval(() => {
+    setTimeout(() => {
       if (isBreak) {
         setCounter(breakCount);
       } else {
         setCounter(normalCount);
       }
-    // }, 250);
+    }, 500);
 
-    // return () => clearInterval(tinyPause);
   }, [isBreak]);
 
   // Run when counter is updated
@@ -34,6 +33,7 @@ export default function App() {
       } else {
         setBreak(true);
         setIteration(iteration - 1);
+        console.log(iteration);
       }
     }
 
@@ -51,6 +51,8 @@ export default function App() {
         title="Begin"
         onPress={() => {
           setCounter(normalCount);
+          setIteration(defaultIterations);
+          setBreak(false);
         }}
       />
     </View>
