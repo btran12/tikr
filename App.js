@@ -1,17 +1,58 @@
 import * as React from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-
-const instructions = Platform.select({
-  ios: `Press Cmd+R to reload,\nCmd+D or shake for dev menu`,
-  android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
-});
+import { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Button } from 'react-native';
+// import Sound from 'react-native-sound';
 
 export default function App() {
+  const normalCount = 15;
+  const breakCount = 10;
+  const defaultIterations = 2;
+
+  const [counter, setCounter] = useState(0);
+  const [iteration, setIteration] = useState(defaultIterations); // Keep track of the number of reps
+  const [isBreak, setBreak] = useState(false); // Keep track of when is break
+
+  // Run when iteration is updated
+  useEffect(() => {
+    // const tinyPause = setInterval(() => {
+      if (isBreak) {
+        setCounter(breakCount);
+      } else {
+        setCounter(normalCount);
+      }
+    // }, 250);
+
+    // return () => clearInterval(tinyPause);
+  }, [isBreak]);
+
+  // Run when counter is updated
+  useEffect(() => {
+
+    if (counter <= 0 && iteration >= 0) {
+      if (isBreak) {
+        setBreak(false)
+      } else {
+        setBreak(true);
+        setIteration(iteration - 1);
+      }
+    }
+
+    const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    return () => clearInterval(timer)
+
+    
+  }, [counter]);
+  
+
   return (
     <View style={styles.container}>
-      <Text style={styles.welcome}>Welcome to React Native!</Text>
-      <Text style={styles.instructions}>To get started, edit App.js</Text>
-      <Text style={styles.instructions}>{instructions}</Text>
+      <Text style={styles.seconds}>{counter}</Text>
+      <Button
+        title="Begin"
+        onPress={() => {
+          setCounter(normalCount);
+        }}
+      />
     </View>
   );
 }
@@ -21,16 +62,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#7A9E9F'
   },
-  welcome: {
-    fontSize: 20,
+  seconds: {
+    fontSize: 180,
     textAlign: 'center',
     margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+    color: '#FE5F55'
   },
 });
