@@ -10,24 +10,25 @@ export default function App() {
 
   const [counter, setCounter] = useState(0);
   const [iteration, setIteration] = useState(defaultIterations); // Keep track of the number of reps
-  const [isBreak, setBreak] = useState(false); // Keep track of when is break
+  const [isBreak, setBreak] = useState(null); // Keep track of when is break
 
   // Run when iteration is updated
   useEffect(() => {
-    setTimeout(() => {
-      if (isBreak) {
-        setCounter(breakCount);
-      } else {
-        setCounter(normalCount);
-      }
-    }, 500);
-
+    if (isBreak != null) {    
+      setTimeout(() => {
+        if (isBreak) {
+          setCounter(breakCount);
+        } else {
+          setCounter(normalCount);
+        }
+      }, 500);
+    }
   }, [isBreak]);
 
   // Run when counter is updated
   useEffect(() => {
 
-    if (counter <= 0 && iteration >= 0) {
+    if (counter <= 0 && iteration > 0 && isBreak != null) {
       if (isBreak) {
         setBreak(false)
       } else {
