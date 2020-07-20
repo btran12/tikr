@@ -43,4 +43,6 @@ target 'tickr' do
 
   # react-native-cli autolinking
   use_native_modules!
+  pod 'RNSound', :path => '../node_modules/react-native-sound'
+
 end

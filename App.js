@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, ToastAndroid } from 'react-native';
 // import Sound from 'react-native-sound';
 
-export default function App() {
+const App = () => {
   const normalCount = 15;
   const breakCount = 10;
   const defaultIterations = 3;
@@ -12,20 +12,31 @@ export default function App() {
   const [iteration, setIteration] = useState(defaultIterations); // Keep track of the number of reps
   const [isBreak, setBreak] = useState(null); // Keep track of when is break
 
-  // Run when iteration is updated
+  // const tickingSound = new Sound('ticking-time.wav');
+  // const playTick = () => {
+  //   tickingSound.play();
+  // }
+
+  const showToast = (message) => {
+    ToastAndroid.show(message, ToastAndroid.SHORT);
+  }
+
+  // Track break
   useEffect(() => {
     if (isBreak != null) {    
       setTimeout(() => {
         if (isBreak) {
           setCounter(breakCount);
+          showToast('Break!');
         } else {
           setCounter(normalCount);
+          showToast('Back at it!');
         }
       }, 500);
     }
   }, [isBreak]);
 
-  // Run when counter is updated
+  // Track counter
   useEffect(() => {
 
     if (counter <= 0 && iteration > 0 && isBreak != null) {
@@ -65,12 +76,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#7A9E9F'
+    backgroundColor: 'black'
   },
   seconds: {
     fontSize: 180,
     textAlign: 'center',
     margin: 10,
-    color: '#FE5F55'
+    color: 'white'
   },
 });
+
+export default App;
